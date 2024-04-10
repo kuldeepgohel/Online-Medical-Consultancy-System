@@ -1,11 +1,9 @@
 package ONLINEMEDICALCONSULTANCY;
 
-import com.mysql.cj.jdbc.Driver;
-
 import java.sql.*;
 import java.util.Scanner;
 
-public class OnlineMedicalconsultancy {
+public class OnlineMedicalConsultancy {
     private static final String url = "jdbc:mysql://localhost:3306/hospital";
     private static final String username = "root";
     private static final String password = "K6h1g2004";
@@ -37,38 +35,32 @@ public class OnlineMedicalconsultancy {
                 System.out.println("Enter your choice:-");
 
                 int c = sc.nextInt();
-                switch (c)
-                {
-                    case 1 :
+                switch (c) {
+                    case 1 -> {
                         //add patient
                         patient.addPatient();
                         System.out.println();
-                        break;
-
-                    case 2:
+                    }
+                    case 2 -> {
                         //view patient
                         patient.viewPatients();
                         System.out.println();
-                        break;
-
-                    case 3:
+                    }
+                    case 3 -> {
                         //view Doctor
                         doctor.viewDoctors();
                         System.out.println();
-                        break;
-
-                    case 4:
+                    }
+                    case 4 -> {
                         //Book Appointment
-                        bookAppointment(patient,doctor,cn,sc);
+                        bookAppointment(patient, doctor, cn, sc);
                         System.out.println();
-                        break;
-
-                    case 5:
+                    }
+                    case 5 -> {
                         //Exit
                         return;
-                    default:
-                        System.out.println("enter legal choice...");
-
+                    }
+                    default -> System.out.println("enter legal choice...");
                 }
             }
 
@@ -88,7 +80,7 @@ public class OnlineMedicalconsultancy {
               System.out.println("Enter Appointment Date(YYYY/MM/DD)");
               String date = scanner.next();
               if(patient.getPatientById(patientId) && doctor.getdoctorById(doctorId)){
-                  if(checkDoctoravailibility(doctorId,date,connection))
+                  if(checkDoctoraVailibility(doctorId,date,connection))
                   {
                      String appointq = "INSERT INTO appointments(patient_id,doctor_id,appointment_date)values(?,?,?)";
                      try
@@ -123,7 +115,7 @@ public class OnlineMedicalconsultancy {
               }
 
           }
-          public static boolean checkDoctoravailibility(int doctorId,String appointment_date,Connection connection)
+          public static boolean checkDoctoraVailibility(int doctorId,String appointment_date,Connection connection)
           {
               String q = " SELECT COUNT(*) FROM appointments WHERE doctor_id=? AND appointment_date = ?";
               try
@@ -135,11 +127,7 @@ public class OnlineMedicalconsultancy {
                   if(rs.next())
                   {
                       int count = rs.getInt(1);
-                      if(count == 0)
-                          return true;
-                      else {
-                          return false;
-                      }
+                      return count == 0;
                   }
 
 
